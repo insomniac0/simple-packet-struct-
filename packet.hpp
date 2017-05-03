@@ -74,7 +74,8 @@ class PacketReader
 
     std::string data;
     std::size_t length;
-
+    PacketFamily family;
+    PacketAction action;
     PacketReader(std::string data)
     {
         this->data = data;
