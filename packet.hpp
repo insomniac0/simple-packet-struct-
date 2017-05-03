@@ -84,11 +84,6 @@ class PacketReader
 
     std::size_t Length();
     std::size_t Remaining();
-    unsigned char PeekByte();
-    unsigned char PeekChar();
-    unsigned short PeekShort();
-    unsigned int PeekThree();
-    unsigned int PeekInt();
     unsigned char *GetBytes(int amount = 1);
     unsigned char GetChar();
     unsigned short GetShort();
