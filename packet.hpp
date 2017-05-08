@@ -27,8 +27,14 @@ enum PacketAction UTIL_EXTEND_ENUM(unsigned char)
 class PacketInfo
 {
     public:
-   static std::string GetFamilyName(PacketFamily family)
-{
+
+    static std::string GetPacketHeader(PacketFamily family,PacketAction action)
+    {
+        return ("Packet_" + GetFamilyName(family) + "_" + GetActionName(action));
+    }
+
+    static std::string GetFamilyName(PacketFamily family)
+    {
     switch (family)
     {
     case PACKET_CONNECTION:
@@ -93,7 +99,7 @@ class PacketReader
     std::string GetFixedString(std::size_t length);
     std::string GetEndString();
     std::string GetBreakString(unsigned char breakchar = 0xFF);
-    unsigned int ByteOrder(unsigned char a,unsigned char b = 0,unsigned char c = 0,unsigned char d = 0);
+    unsigned int ByteOrder(unsigned char a = 0xFF,unsigned char b = 0xFF,unsigned char c = 0xFF,unsigned char d = 0xFF);
 
 };
 
@@ -115,6 +121,9 @@ class PacketBuilder
         if(!action)
         wrn += "Packet action is invalid ";
 
+        this->data = "";
+        this->size = 0;
+
         this->AddChar(this->family);
         this->AddChar(this->action);
 
@@ -134,8 +143,6 @@ class PacketBuilder
     unsigned int AddInt(unsigned int num);
     void Reset();
     std::string Get();
-    operator std::string();
-    std::string ByteStream(unsigned char *bytes);
     std::string Construct(PacketFamily family,PacketAction action,std::string data);
 
 };
